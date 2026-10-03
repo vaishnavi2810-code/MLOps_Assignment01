@@ -43,6 +43,9 @@ if __name__ == '__main__':
     with open('data/target.pickle', 'wb') as data:
         pickle.dump(y_test, data)
 
+    # Recent MLflow versions refuse the ./mlruns file store unless opted in.
+    # Fine here: mlruns/ is gitignored and thrown away with the CI runner.
+    os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
     mlflow.set_tracking_uri("./mlruns")
     dataset_name = "Breast Cancer Wisconsin"
     current_time = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
